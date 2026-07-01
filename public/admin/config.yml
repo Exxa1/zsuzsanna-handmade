@@ -1,0 +1,171 @@
+# ============================================================
+# Sveltia / Decap CMS — the friendly editor at /admin.
+# Three simple collections: Dolls, Pages (Home/About/Contact), Blog.
+#
+# Editor model: the repo stays under the developer's GitHub account; the
+# client is added as a collaborator with Write access and logs in via GitHub
+# OAuth (see README "Client CMS access"). `publish_mode: simple` means her
+# edits commit straight to `branch` and redeploy — no draft/review board to
+# learn. `open_authoring` is intentionally NOT set (it's for anonymous
+# outside contributors submitting via forks, not a trusted collaborator).
+#
+# ⚠️ BEFORE GOING LIVE — set `site_url` to the real domain (or the Netlify
+# subdomain while you don't have one yet). See README "Going live / repoint".
+# ============================================================
+backend:
+  name: github
+  repo: Exxa1/zsuzsanna-handmade
+  branch: main
+
+# Edit local files at localhost/admin (in Chromium: "Work with Local Repository").
+# Only activates on localhost — ignored on the deployed site.
+local_backend: true
+
+publish_mode: simple
+media_folder: public/images
+public_folder: /images
+site_url: "https://mesehely.example/" # TODO(repoint): the Netlify subdomain or real domain
+
+collections:
+  # ---- Dolls -------------------------------------------------------------
+  # One entry per doll. Each appears on the home page and gets its own page.
+  # Photos live next to the entry (relative media) so they're optimized at build.
+  - name: dolls
+    label: "Dolls"
+    label_singular: "Doll"
+    description: "Each doll shows on the home page and has its own page. Add one here to publish it."
+    folder: src/content/dolls
+    path: "{{slug}}/index"
+    extension: yaml
+    format: yaml
+    media_folder: ""
+    public_folder: ""
+    create: true
+    fields:
+      - { name: name, label: "Name", widget: string }
+      - { name: slug, label: "URL slug (lowercase, no spaces)", widget: string }
+      - { name: order, label: "Order on the home page (lower = first)", widget: number, value_type: int, default: 0 }
+      - { name: available, label: "Available (uncheck when sold)", widget: boolean, default: true, required: false }
+      - { name: price, label: "Price (optional, e.g. 120€)", widget: string, required: false }
+      - name: description
+        label: "Description"
+        widget: object
+        fields:
+          - { name: hu, label: "Magyar", widget: text, required: false }
+          - { name: en, label: "English", widget: text, required: false }
+      - { name: cover, label: "Cover photo (optional — defaults to the first photo)", widget: image, required: false }
+      - name: images
+        label: "Photos"
+        label_singular: "Photo"
+        widget: list
+        fields:
+          - { name: src, label: "Photo", widget: image }
+          - { name: alt, label: "Photo description (for accessibility)", widget: string, required: false }
+
+  # ---- Pages -------------------------------------------------------------
+  # The three fixed pages. Each is one file with a small, bilingual field set.
+  - name: pages
+    label: "Pages"
+    label_singular: "Page"
+    description: "The Home, About, and Contact page texts."
+    media_folder: ""
+    public_folder: ""
+    files:
+      - name: home
+        label: "Home page"
+        file: src/content/pages/home.yaml
+        fields:
+          - name: heading
+            label: "Welcome heading"
+            widget: object
+            fields:
+              - { name: hu, label: "Magyar", widget: string }
+              - { name: en, label: "English", widget: string }
+          - name: text
+            label: "Intro text"
+            widget: object
+            fields:
+              - { name: hu, label: "Magyar", widget: text }
+              - { name: en, label: "English", widget: text }
+          - name: dollsHeading
+            label: "Heading above the dolls"
+            widget: object
+            fields:
+              - { name: hu, label: "Magyar", widget: string }
+              - { name: en, label: "English", widget: string }
+          - { name: bannerImage, label: "Banner photo", widget: image }
+          - { name: bannerAlt, label: "Banner photo description", widget: string, required: false }
+
+      - name: about
+        label: "About page"
+        file: src/content/pages/about.yaml
+        fields:
+          - name: heading
+            label: "Heading"
+            widget: object
+            fields:
+              - { name: hu, label: "Magyar", widget: string }
+              - { name: en, label: "English", widget: string }
+          - name: text
+            label: "About text"
+            widget: object
+            fields:
+              - { name: hu, label: "Magyar", widget: text }
+              - { name: en, label: "English", widget: text }
+          - { name: photo, label: "Your photo", widget: image }
+          - { name: photoAlt, label: "Photo description", widget: string, required: false }
+
+      - name: contact
+        label: "Contact page"
+        file: src/content/pages/contact.yaml
+        fields:
+          - name: heading
+            label: "Heading"
+            widget: object
+            fields:
+              - { name: hu, label: "Magyar", widget: string }
+              - { name: en, label: "English", widget: string }
+          - name: text
+            label: "Text (e.g. reach out on social media)"
+            widget: object
+            fields:
+              - { name: hu, label: "Magyar", widget: text }
+              - { name: en, label: "English", widget: text }
+
+  # ---- Blog --------------------------------------------------------------
+  # Co-located Markdown: src/content/posts/<slug>/index.md + its images. Write a
+  # post in one language at a time; it appears in that language's blog list.
+  - name: post
+    label: "Blog"
+    label_singular: "Blog post"
+    folder: src/content/posts
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    create: true
+    format: frontmatter
+    fields:
+      - { name: title, label: "Title", widget: string }
+      - { name: slug, label: "URL slug (lowercase, no spaces)", widget: string }
+      - { name: description, label: "Short summary", widget: text }
+      - { name: publishedAt, label: "Date", widget: datetime }
+      - { name: cover, label: "Cover image", widget: image, required: false }
+      - { name: tags, label: "Tags", widget: list, required: false }
+      - { name: lang, label: "Language", widget: select, options: ["hu", "en"], default: "hu" }
+      - { name: isPublish, label: "Publish", widget: boolean, default: true }
+      - { name: isDraft, label: "Draft", widget: boolean, default: false }
+      - { name: body, label: "Body", widget: markdown }
+
+# Optimize images on upload (Sveltia CMS).
+# https://github.com/sveltia/sveltia-cms?tab=readme-ov-file#optimizing-images-for-upload
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image: # original format
+          format: webp # new format, only `webp` is supported
+          quality: 85 # default: 85
+          width: 2048 # default: original size
+          height: 2048 # default: original size
+        svg:
+          optimize: true

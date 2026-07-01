@@ -1,0 +1,106 @@
+/* ============================================================
+   DESIGN TOKENS — the single source of truth for the brand.
+   Two layers: PRIMITIVES (raw values) → SEMANTIC tokens (meaning).
+   Markup uses only the semantic `colorfor-*` tokens (never the primitives).
+   Re-brand a client by editing THIS file (+ the imports in fonts.css).
+   Light theme only.
+
+   Brand: "Zsuzsánna Hand-made" — handmade dolls. Warm, earthy, storybook.
+   See DESIGN_GUIDE.md for the full system.
+   ============================================================ */
+@theme {
+	/* ---------- Type ---------- */
+	/* Amatic SC carries the handmade personality (headings, nav, wordmark).
+	   Nunito is the legible workhorse for body copy — the pairing the brand
+	   guide recommends, since Amatic SC is too light for long paragraphs. */
+	--default-font-family: "Nunito Variable", "Nunito", ui-sans-serif, system-ui, sans-serif;
+	--heading-font-family: "Amatic SC", "Comic Sans MS", cursive;
+	--default-font-spacing: 0em;
+	--heading-font-spacing: 0.01em;
+
+	--font-paragraph: var(--default-font-family);
+	--font-heading: var(--heading-font-family);
+	--font-nav: var(--heading-font-family);
+
+	/* ---------- Shape ---------- */
+	/* The site's signature soft, rounded-lg corners. */
+	--roundedness-default: 0.5rem;
+	--roundedness-button: var(--roundedness-default);
+	--roundedness-textinput: var(--roundedness-default);
+	--roundedness-card: var(--roundedness-default);
+
+	/* ============================================
+	   PRIMITIVES — the only raw hex in the system.
+	   Tailwind's default palette is switched off so only brand colours show up.
+	   ============================================ */
+	--color-*: initial;
+
+	--color-white: #ffffff;
+	--color-black: #000000;
+
+	/* Linen / warm white — the page background */
+	--color-linen: #fff9f1;
+	--color-linen-soft: #fbf2e7; /* a hair warmer, for alternating sections */
+
+	/* Feldgrau — the green-grey brand primary (footer, primary button, cards) */
+	--color-feldgrau: #586f6b;
+	--color-feldgrau-dark: #475a57;
+
+	/* Peach / apricot — the soft secondary accent */
+	--color-peach: #fcceaf;
+	--color-peach-dark: #f7bd96;
+
+	/* Olive — muted / secondary text */
+	--color-olive: #6e6414;
+
+	/* Heart red — the single emotional accent, used sparingly */
+	--color-heart: #b91c1c;
+
+	/* Warm neutrals (borders, soft surfaces) — a terracotta-tinted grey ramp */
+	--color-ink: #2c2a24; /* warm near-black body text */
+	--color-sand-100: #f4e9e0;
+	--color-sand-200: #e7d1c1;
+	--color-sand-300: #d4aa8e;
+
+	/* ============================================
+	   SEMANTIC TOKENS — meaning → primitive. Use these in markup.
+	   ============================================ */
+
+	/* Text */
+	--color-colorfor-text-heading: var(--color-black);
+	--color-colorfor-text-heading-2: var(--color-feldgrau);
+	--color-colorfor-text-heading-accent: var(--color-feldgrau);
+	--color-colorfor-text-body: var(--color-ink);
+	--color-colorfor-text-body-inverse: var(--color-white);
+	--color-colorfor-text-secondary: var(--color-olive);
+	--color-colorfor-text-link: var(--color-feldgrau);
+	--color-colorfor-text-button: var(--color-white);
+	--color-colorfor-text-footer: var(--color-white);
+	--color-colorfor-text-nav: var(--color-black);
+
+	/* Background */
+	--color-colorfor-bg-page: var(--color-linen);
+	--color-colorfor-bg-section: var(--color-linen-soft);
+	--color-colorfor-bg-card: var(--color-feldgrau);
+	--color-colorfor-bg-header: var(--color-linen);
+	--color-colorfor-bg-footer: var(--color-feldgrau);
+	--color-colorfor-bg-button: var(--color-peach);
+	--color-colorfor-bg-button-gray: var(--color-sand-100);
+	--color-colorfor-bg-button-dark: var(--color-feldgrau);
+	--color-colorfor-bg-button-hover: var(--color-peach-dark);
+
+	/* Border */
+	--color-colorfor-border-subtle: var(--color-sand-200);
+	--color-colorfor-border-strong: var(--color-feldgrau);
+	--color-colorfor-border-input: var(--color-sand-300);
+	--color-colorfor-border-button: var(--color-feldgrau);
+
+	/* Accent */
+	--color-colorfor-accent-primary: var(--color-feldgrau);
+	--color-colorfor-accent-secondary: var(--color-heart);
+
+	/* Card stroke + hamburger menu */
+	--color-colorfor-stroke-card: var(--color-feldgrau);
+	--color-colorfor-hamburgermenu-bg: var(--color-sand-200);
+	--color-colorfor-hamburgermenu-lines: var(--color-feldgrau);
+}

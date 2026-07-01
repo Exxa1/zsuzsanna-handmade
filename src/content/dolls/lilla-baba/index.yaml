@@ -1,0 +1,22 @@
+name: Lilla
+slug: lilla-baba
+order: 1
+available: false
+price: ''
+description:
+  hu: |-
+    Lilla egy klasszikus Waldorf-stílusú baba, tiszta gyapjúból és pamutból. Puha, ölelnivaló teste és kézzel hímzett arca egy életre szóló társsá teszi.
+
+    A haja kézzel készült, a ruhája levehető. Magassága kb. 30 cm.
+  en: |-
+    Lilla is a classic Waldorf-style doll, made of pure wool and cotton. Her soft, huggable body and hand-embroidered face make her a companion for life.
+
+    Her hair is hand-made and her clothes are removable. She is about 30 cm tall.
+cover: handmade_product-34.webp
+images:
+  - src: handmade_product-32.webp
+    alt: Lilla baba teljes alakban
+  - src: handmade_product-31.webp
+    alt: Lilla baba arca közelről
+  - src: handmade_product-34.webp
+    alt: ''

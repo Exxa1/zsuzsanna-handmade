@@ -1,0 +1,31 @@
+---
+// Language switcher. Links to the SAME path in the other language.
+//
+// On a page that exists in only one language, either:
+//   - omit this component, or
+//   - pass an explicit destination, e.g. <LanguageSwitcher otherHref="/en" />
+import {
+  getLangFromUrl,
+  stripLocale,
+  localizePath,
+  type Lang,
+} from "@/i18n/utils";
+
+interface Props {
+  /** Explicit destination for the other language (for single-language pages). */
+  otherHref?: string;
+}
+
+const { otherHref } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const other: Lang = lang === "hu" ? "en" : "hu";
+const target = otherHref ?? localizePath(stripLocale(Astro.url.pathname), other);
+---
+
+<a
+  href={target}
+  hreflang={other}
+  class="text-colorfor-text-nav hover:text-colorfor-accent-primary font-nav text-base tracking-(--heading-font-spacing) transition-colors"
+>
+  {other.toUpperCase()}
+</a>

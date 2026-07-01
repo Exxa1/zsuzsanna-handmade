@@ -1,0 +1,19 @@
+---
+import presentation from "@/data/presentation"
+---
+
+<ul class="mt-8 flex justify-center gap-6 sm:mt-0">
+                {presentation.socials.map((social) => 
+                    <li>
+                        <a
+						href={social.link}
+						rel="noreferrer"
+						target="_blank"
+						class="text-current transition hover:opacity-75"
+					>
+						<span class="sr-only">{social.label}</span>
+
+						<span set:html={social.icon} />
+					</a>
+                    </li>)}
+            </ul>

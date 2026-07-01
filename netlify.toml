@@ -1,0 +1,12 @@
+# Netlify build + redirects.
+# Static Astro build (the Sveltia admin is a static client app at /admin — no adapter).
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Add 301 redirects here if you ever rename a page slug, e.g.:
+# [[redirects]]
+#   from = "/regi-url"
+#   to = "/uj-url"
+#   status = 301

@@ -1,0 +1,92 @@
+---
+import Socials_list from "./Utilities/socials_list.astro";
+import presentation from "@/data/presentation";
+import { getLangFromUrl, useTranslations, localizePath } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const usefulLinks = [
+  { label: t("nav.home"), href: localizePath("/", lang) },
+  { label: t("footer.blog"), href: localizePath("/blog", lang) },
+  { label: t("footer.about"), href: localizePath("/about", lang) },
+  { label: t("footer.contact"), href: localizePath("/contact", lang) },
+];
+
+// Legal pages are Hungarian-only static pages (see src/pages/footer/*.md).
+const legalLinks = [
+  { label: t("footer.privacy"), href: "/footer/adatkezeles_tajekoztato" },
+  { label: t("footer.terms"), href: "/footer/ASZF" },
+  { label: t("footer.imprint"), href: "/footer/impresszum" },
+];
+---
+
+<footer class="bg-colorfor-bg-footer mt-24">
+  <div
+    class="mx-auto max-w-7xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-12 lg:px-8"
+  >
+    <div class="sm:flex sm:items-center sm:justify-between">
+      <div class="text-colorfor-text-footer font-heading text-4xl">
+        {presentation.company_name}
+      </div>
+
+      <div class="text-colorfor-text-footer mt-6 sm:mt-0">
+        <Socials_list />
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-1 gap-8 border-t border-white/20 pt-8 sm:grid-cols-2 lg:pt-12"
+    >
+      <div>
+        <p class="text-colorfor-text-footer text-xl">
+          {t("footer.usefulLinks")}
+        </p>
+        <ul class="mt-6 space-y-3">
+          {
+            usefulLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-colorfor-text-footer transition hover:opacity-75"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-colorfor-text-footer text-xl">{t("footer.legal")}</p>
+        <ul class="mt-6 space-y-3">
+          {
+            legalLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  class="text-colorfor-text-footer transition hover:opacity-75"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col gap-1 border-t border-white/20 pt-6 text-right sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p class="text-colorfor-text-footer/70 text-sm">
+        © {new Date().getFullYear()} {presentation.company_name}. {
+          t("footer.rights")
+        }.
+      </p>
+      <p class="text-colorfor-text-footer/70 text-sm">{t("footer.credit")}</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,27 @@
+---
+import { getNavItems } from "@/data/nav_items";
+import LanguageSwitcher from "@/components/Utilities/language_switcher.astro";
+import { getLangFromUrl } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const nav_items = getNavItems(lang);
+---
+
+<header
+  class="inset-x-0 top-0 z-50 bg-colorfor-bg-header font-nav text-lg tracking-(--heading-font-spacing)"
+>
+  <div class="mx-auto">
+    <div class="flex h-32 items-center justify-between">
+      <a
+        class="absolute top-1/2 left-1/2 z-40 block -translate-x-1/2 -translate-y-1/2 px-16 text-center whitespace-nowrap"
+        href={nav_items[0].link}
+      >
+        <span class="text-3xl leading-none sm:text-4xl lg:text-5xl">Zsuzsánna Hand-made</span>
+      </a>
+
+      <div class="absolute top-1/2 left-6 z-40 -translate-y-1/2">
+        <LanguageSwitcher />
+      </div>
+    </div>
+  </div>
+</header>

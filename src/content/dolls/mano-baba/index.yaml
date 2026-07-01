@@ -1,0 +1,22 @@
+name: Manó
+slug: mano-baba
+order: 2
+available: false
+price: ''
+description:
+  hu: |-
+    Manó egy kötött kis figura, meleg, földszínű fonalakból. Tökéletes első baba a legkisebbeknek — könnyű, puha és bármikor magaddal viheted.
+
+    Ez a darab már elkelt, de hasonlót szívesen készítek megrendelésre.
+  en: |-
+    Manó is a little knitted figure in warm, earthy yarns. A perfect first doll for the littlest ones — light, soft, and ready to go anywhere with you.
+
+    This one has found a home, but I'm happy to make a similar one to order.
+cover: id006 (1).webp
+images:
+  - src: id006 (1).webp
+    alt: Manó baba teljes alakban
+  - src: id006 (2).webp
+    alt: Manó baba közelről
+  - src: id006 (3).webp
+    alt: ''

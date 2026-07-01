@@ -1,0 +1,13 @@
+---
+// Primitive long-form wrapper. Applies the brand prose styles + a readable
+// measure. Use for any rendered markdown / rich text.
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["prose prose-website-colors mx-auto max-w-prose", className]}>
+	<slot />
+</div>

@@ -1,0 +1,23 @@
+---
+// Bilingual 404. Netlify serves this single page for every not-found path
+// (including /en/*), so it shows both languages instead of guessing the locale.
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ui } from "@/i18n/ui";
+
+const hu = ui.hu;
+const en = ui.en;
+---
+
+<BaseLayout title={`${hu["notFound.message"]} / ${en["notFound.message"]}`}>
+	<section
+		class="flex min-h-[80vh] flex-col items-center justify-center px-4 text-center"
+	>
+		<h1 class="mb-4 text-6xl font-bold">{hu["notFound.alert"]}</h1>
+		<p class="mb-8 text-xl">
+			{hu["notFound.message"]} / {en["notFound.message"]}
+		</p>
+		<a href="/" class="hover:underline">
+			{hu["notFound.action"]} / {en["notFound.action"]}
+		</a>
+	</section>
+</BaseLayout>

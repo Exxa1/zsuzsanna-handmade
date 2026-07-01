@@ -1,0 +1,25 @@
+---
+// Primitive button. Renders an <a> when `href` is given, else a <button>.
+// variant maps to the component classes in global.css.
+interface Props {
+	href?: string;
+	variant?: "dark" | "default" | "accent";
+	class?: string;
+	type?: "button" | "submit" | "reset";
+	[key: string]: unknown;
+}
+
+const { href, variant = "dark", class: className, ...rest } = Astro.props;
+
+const variantClass = {
+	dark: "darkbutton",
+	default: "defaultbutton",
+	accent: "accentbutton",
+}[variant];
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag href={href} class:list={["button", variantClass, className]} {...rest}>
+	<slot />
+</Tag>

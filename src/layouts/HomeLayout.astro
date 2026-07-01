@@ -1,0 +1,98 @@
+---
+// Home page — a banner, a short intro, and the grid of dolls. Self-contained:
+// both src/pages/index.astro and src/pages/en/index.astro render this, and the
+// language is read from the URL.
+import { getEntry, getCollection } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
+import Picture from "@/components/ui/Picture.astro";
+import { getLangFromUrl, useTranslations, localizePath } from "@/i18n/utils";
+import { pick, paragraphs } from "@/utils/text";
+import { seo } from "@/config/site";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const home = (await getEntry("pages", "home"))!.data;
+const heading = pick(home.heading, lang);
+const intro = paragraphs(pick(home.text, lang));
+const dollsHeading = pick(home.dollsHeading, lang);
+
+const dolls = (await getCollection("dolls")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout title={heading || seo.title} description={seo.description}>
+  <!-- Banner -->
+  {
+    home.bannerImage && (
+      <Section width="full" class="pt-4">
+        <Picture
+          src={home.bannerImage}
+          alt={home.bannerAlt ?? heading}
+          loading="eager"
+          sizes="100vw"
+          class="aspect-[16/9] w-full rounded-(--roundedness-card) object-cover sm:aspect-[21/9]"
+        />
+      </Section>
+    )
+  }
+
+  <!-- Intro -->
+  <Section width="prose" class="py-12 text-center lg:py-16">
+    {heading && <h1 class="mb-6">{heading}</h1>}
+    {intro.map((p) => <p class="mt-4 text-xl">{p}</p>)}
+  </Section>
+
+  <!-- Dolls grid -->
+  <Section width="content" class="pb-16 lg:pb-24">
+    {dollsHeading && <h2 class="mb-12 text-center">{dollsHeading}</h2>}
+
+    {
+      dolls.length === 0 ? (
+        <p class="text-colorfor-text-secondary text-center">
+          {lang === "hu"
+            ? "Hamarosan új babák érkeznek."
+            : "New dolls are coming soon."}
+        </p>
+      ) : (
+        <ul class="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          {dolls.map((doll) => (
+            <li>
+              <a
+                class="group flex flex-col gap-3"
+                href={localizePath(`/dolls/${doll.data.slug}`, lang)}
+              >
+                <div class="relative overflow-hidden rounded-(--roundedness-card)">
+                  <Picture
+                    src={doll.data.cover ?? doll.data.images[0]?.src}
+                    alt={doll.data.name}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    class="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {doll.data.available === false && (
+                    <span class="bg-colorfor-bg-card text-colorfor-text-body-inverse absolute top-3 right-3 rounded-(--roundedness-default) px-3 py-1 text-lg">
+                      {t("dolls.sold")}
+                    </span>
+                  )}
+                </div>
+
+                <div class="flex items-baseline justify-between gap-3">
+                  <h3 class="text-3xl group-hover:text-current/70">
+                    {doll.data.name}
+                  </h3>
+                  {doll.data.price && (
+                    <span class="text-colorfor-text-secondary text-2xl whitespace-nowrap">
+                      {doll.data.price}
+                    </span>
+                  )}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </Section>
+</BaseLayout>

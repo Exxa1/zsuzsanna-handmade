@@ -1,0 +1,20 @@
+---
+// Utility / legal layout (ÁSZF, GDPR, Impresszum, GYIK). Used via a markdown
+// page's `layout:` frontmatter, so props arrive under `frontmatter`. Renders
+// the long-form text in brand prose on a readable measure.
+import BaseLayout from "./BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
+import Prose from "@/components/ui/Prose.astro";
+
+const { frontmatter } = Astro.props;
+const title = frontmatter?.title;
+const description = frontmatter?.description;
+---
+
+<BaseLayout title={title} description={description}>
+	<Section width="prose" class="py-10 md:py-16">
+		<Prose>
+			<slot />
+		</Prose>
+	</Section>
+</BaseLayout>

@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
+import Picture from "@/components/ui/Picture.astro";
+import formatDate from "@/utils/formatDate";
+import { getLangFromUrl, useTranslations, localizePath } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const posts = (
+	await getCollection(
+		"posts",
+		({ data }) => data.lang === lang && data.isPublish && !data.isDraft,
+	)
+).sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+---
+
+<BaseLayout title={t("blog.title")}>
+	<Section width="content" class="min-h-svh py-10 lg:py-16">
+		<h1 class="mb-12">{t("blog.title")}</h1>
+
+		<ul class="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+			{
+				posts.map((post) => (
+					<li>
+						<a
+							class="group flex flex-col gap-3"
+							href={localizePath(`/blog/${post.data.slug}`, lang)}
+						>
+							{post.data.cover && (
+								<div class="overflow-hidden rounded-(--roundedness-card)">
+									<Picture
+										src={post.data.cover}
+										alt={post.data.title}
+										sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+										class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+									/>
+								</div>
+							)}
+
+							<div class="flex flex-col gap-2">
+								<time
+									datetime={post.data.publishedAt.toISOString()}
+									class="text-colorfor-text-secondary text-sm"
+								>
+									{formatDate(post.data.publishedAt)}
+								</time>
+
+								<h2 class="text-3xl group-hover:text-current/70">
+									{post.data.title}
+								</h2>
+
+								<p class="text-colorfor-text-body line-clamp-3">
+									{post.data.description}
+								</p>
+							</div>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</Section>
+</BaseLayout>

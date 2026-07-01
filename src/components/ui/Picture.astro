@@ -1,0 +1,33 @@
+---
+// Primitive image. Accepts either an imported ImageMetadata (code) or a path
+// string (CMS/content) — strings are resolved via the image bridge. Every
+// in-design image renders through this, enforcing optimization + required alt.
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { resolveImage } from "@/lib/images";
+
+interface Props {
+	src: ImageMetadata | string;
+	alt: string;
+	class?: string;
+	loading?: "lazy" | "eager";
+	widths?: number[];
+	sizes?: string;
+	[key: string]: unknown;
+}
+
+const { src, alt, class: className, loading = "lazy", ...rest } = Astro.props;
+const resolved = typeof src === "string" ? resolveImage(src) : src;
+---
+
+{
+	resolved && (
+		<Image
+			src={resolved}
+			alt={alt}
+			loading={loading}
+			class:list={[className]}
+			{...rest}
+		/>
+	)
+}

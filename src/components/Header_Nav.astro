@@ -1,0 +1,123 @@
+---
+// Header with a full-screen overlay navigation (all viewport sizes). The bar
+// shows the logo + language switcher + an animated hamburger button; opening it
+// reveals a page-filling menu (links, CTA, language, socials) and locks scroll.
+// Used wherever BaseLayout gets `nav` (default on); off for ad landing pages.
+import { getNavItems, getCallToAction } from "@/data/nav_items";
+import LanguageSwitcher from "@/components/Utilities/language_switcher.astro";
+import Socials_list from "@/components/Utilities/socials_list.astro";
+import { getLangFromUrl } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const nav_items = getNavItems(lang);
+const call_to_action = getCallToAction(lang);
+---
+
+<header
+  class="font-nav relative bg-colorfor-bg-header text-lg tracking-(--heading-font-spacing)"
+>
+  <div class="flex h-24 items-center justify-between sm:h-32">
+    <a
+      class="absolute top-1/2 left-1/2 z-30 block -translate-x-1/2 -translate-y-1/2 px-16 text-center whitespace-nowrap"
+      href={nav_items[0].link}
+    >
+      <span class="text-3xl leading-none sm:text-4xl lg:text-5xl">Zsuzsánna Hand-made</span>
+    </a>
+
+    <div class="absolute top-1/2 left-6 z-30 -translate-y-1/2"><LanguageSwitcher /></div>
+
+    <div class="absolute top-1/2 right-6 z-50 -translate-y-1/2">
+      <button
+        id="site-nav-toggle"
+        class="group w-12 rounded-(--roundedness-button) p-2 transition"
+        aria-controls="site-nav-overlay"
+        aria-expanded="false"
+        aria-label="Toggle menu"
+      >
+        <div
+          class="bg-colorfor-hamburgermenu-lines my-2 h-1 w-10 transition-[width] duration-500 group-aria-expanded:w-12"
+        >
+        </div>
+        <div
+          class="bg-colorfor-hamburgermenu-lines my-2 h-1 w-12 transition-[width] duration-500 group-aria-expanded:w-8"
+        >
+        </div>
+        <div
+          class="bg-colorfor-hamburgermenu-lines my-2 h-1 w-8 transition-[width] duration-500 group-aria-expanded:w-10"
+        >
+        </div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Full-screen overlay menu -->
+<nav
+  id="site-nav-overlay"
+  class="fixed inset-0 z-40 overflow-y-auto bg-colorfor-bg-page"
+  aria-label="Global"
+>
+  <!-- min-h-full + justify-center keeps the menu centred when it fits and
+       scrollable (so every item stays reachable) when the viewport is short. -->
+  <div
+    class="font-heading flex min-h-full flex-col items-center justify-center gap-10 px-4 py-24 text-3xl"
+  >
+    <ul class="flex flex-col items-center gap-6">
+      {
+        nav_items.map((item) => (
+          <li>
+            <a class="transition hover:text-current/70" href={item.link}>
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href={call_to_action.link} class="button darkbutton text-lg">
+      {call_to_action.name}
+    </a>
+
+    <div class="flex flex-col items-center gap-6 text-lg">
+      <LanguageSwitcher />
+      <Socials_list />
+    </div>
+  </div>
+</nav>
+
+<style>
+  #site-nav-overlay {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 300ms ease,
+      visibility 300ms ease;
+  }
+  #site-nav-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("site-nav-toggle");
+  const overlay = document.getElementById("site-nav-overlay");
+  const root = document.documentElement;
+
+  function setOpen(open: boolean) {
+    btn?.setAttribute("aria-expanded", String(open));
+    overlay?.classList.toggle("is-open", open);
+    // Lock page scroll while the menu fills the screen.
+    root.classList.toggle("overflow-hidden", open);
+  }
+
+  btn?.addEventListener("click", () =>
+    setOpen(btn.getAttribute("aria-expanded") !== "true"),
+  );
+  overlay
+    ?.querySelectorAll("a")
+    .forEach((a) => a.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
+</script>

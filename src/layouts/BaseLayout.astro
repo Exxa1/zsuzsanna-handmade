@@ -1,0 +1,63 @@
+---
+import Header_No_Nav from "../components/Header_No_Nav.astro";
+import Header_onlyCTA from "../components/Header_onlyCTA.astro";
+import Header_Nav from "../components/Header_Nav.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import Footer from "../components/Footer.astro";
+import { getLangFromUrl } from "@/i18n/utils";
+import { analytics } from "@/config/site";
+
+import "@/styles/global.css";
+import "@/styles/scrollbar.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  headerCTA?: boolean;
+  // Show the full-screen overlay navigation. Default on; turn off for ad
+  // landing pages that should stay distraction-free.
+  nav?: boolean;
+  og?: {
+    title: string;
+    type: string;
+    description: string;
+    image: string;
+    alt: string;
+  };
+}
+
+const { title, description, headerCTA = true, nav = true, og } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html lang={lang} class="font-paragraph scroll-smooth scroll-pt-10">
+  <head>
+    <SEOTags title={title} description={description} og={og} />
+
+    <script data-goatcounter={analytics.goatcounter}
+        async src="//gc.zgo.at/count.js"></script>
+
+    <!-- The Cookie Banner using silktide -->
+    <link
+      rel="stylesheet"
+      id="silktide-consent-manager-css"
+      href="/cookie-banner/silktide-consent-manager.css"
+    />
+  </head>
+
+  <body class="bg-colorfor-bg-page">
+    {nav ? <Header_Nav /> : headerCTA ? <Header_onlyCTA /> : <Header_No_Nav />}
+
+    <!-- Default page values -->
+    <div class="text-colorfor-text-body">
+      <slot />
+    </div>
+
+    <Footer />
+    
+    <!-- The Cookie Banner using silktide -->
+    <script src="/cookie-banner/silktide-consent-manager.js" is:inline></script>
+    <script src="/cookie-banner/silktide-config.js" is:inline></script>
+  </body>
+</html>

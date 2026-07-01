@@ -1,0 +1,20 @@
+name: Jóni
+slug: joni
+order: 5
+available: false
+price: ''
+description:
+  hu: ''
+  en: ''
+cover: id004 (0).webp
+images:
+  - src: id004 (0).webp
+    alt: ''
+  - src: id004 (1).webp
+    alt: ''
+  - src: id004 (2).webp
+    alt: ''
+  - src: id004 (3).webp
+    alt: ''
+  - src: id004 (4).webp
+    alt: ''

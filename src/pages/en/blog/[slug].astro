@@ -1,0 +1,36 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+
+export async function getStaticPaths() {
+	// English posts render at /en/blog/<slug>. No English posts yet → no pages
+	// are generated until a post is tagged `lang: en`.
+	const posts = await getCollection(
+		"posts",
+		({ data }) => data.lang === "en" && data.isPublish,
+	);
+
+	return posts.map((post) => ({
+		params: { slug: post.data.slug },
+		props: { post },
+	}));
+}
+
+type Props = {
+	post: CollectionEntry<"posts">;
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, publishedAt, tags, cover } = post.data;
+---
+
+<ArticleLayout
+	title={title}
+	description={description}
+	publishedAt={publishedAt}
+	tags={tags}
+	cover={cover}
+>
+	<Content />
+</ArticleLayout>

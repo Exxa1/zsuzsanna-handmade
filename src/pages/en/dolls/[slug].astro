@@ -1,0 +1,16 @@
+---
+import { getCollection } from "astro:content";
+import DollLayout from "@/layouts/DollLayout.astro";
+
+export async function getStaticPaths() {
+	const dolls = await getCollection("dolls");
+	return dolls.map((doll) => ({
+		params: { slug: doll.data.slug },
+		props: { doll },
+	}));
+}
+
+const { doll } = Astro.props;
+---
+
+<DollLayout doll={doll} />

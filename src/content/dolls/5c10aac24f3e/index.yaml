@@ -1,0 +1,20 @@
+name: Family
+slug: kiscsalad
+order: 0
+available: false
+price: ''
+description:
+  hu: ''
+  en: ''
+cover: id008 (1).webp
+images:
+  - src: id008 (1).webp
+    alt: ''
+  - src: id008 (2).webp
+    alt: ''
+  - src: id008 (3).webp
+    alt: ''
+  - src: id008 (4).webp
+    alt: ''
+  - src: id008 (5).webp
+    alt: ''

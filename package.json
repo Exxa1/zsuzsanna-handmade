@@ -1,0 +1,34 @@
+{
+  "name": "zsuzsanna-handmade",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.22.3"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/nunito": "^5.2.6",
+    "@fontsource/amatic-sc": "^5.2.6",
+    "@tailwindcss/vite": "^4.3.1",
+    "astro": "^7.0.2",
+    "astro-seo": "^1.1.0",
+    "sharp": "^0.35.2",
+    "tailwindcss": "^4.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "@typescript-eslint/parser": "^8.62.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-astro": "^1.7.0",
+    "prettier": "^3.8.4",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.8.0"
+  }
+}

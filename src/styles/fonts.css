@@ -1,0 +1,9 @@
+/* Self-hosted fonts — no Google CDN (faster + avoids the Google-Fonts GDPR issue).
+   To re-brand a client: swap these imports and the font tokens in tokens.css.
+
+   Brand pairing (see DESIGN_GUIDE.md):
+   - Amatic SC  → headings, nav, the wordmark (the handmade personality)
+   - Nunito     → body copy (a clean, warm, humanist sans for legibility) */
+@import "@fontsource/amatic-sc/400.css"; /* headings — regular */
+@import "@fontsource/amatic-sc/700.css"; /* headings — bold */
+@import "@fontsource-variable/nunito"; /* body — weight axis */

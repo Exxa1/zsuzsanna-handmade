@@ -1,0 +1,107 @@
+---
+// Doll detail page — photo gallery + name, price, availability, description.
+// Rendered from src/pages/dolls/[slug].astro and its /en counterpart.
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
+import Picture from "@/components/ui/Picture.astro";
+import Button from "@/components/ui/Button.astro";
+import { SITE_URL } from "@/config/site";
+import { getLangFromUrl, useTranslations, localizePath } from "@/i18n/utils";
+import { pick, paragraphs } from "@/utils/text";
+
+interface Props {
+  doll: CollectionEntry<"dolls">;
+}
+
+const { doll } = Astro.props;
+const { name, price, available, description, cover, images } = doll.data;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const text = paragraphs(pick(description, lang));
+const shareImage = cover ?? images[0]?.src;
+const og = shareImage
+  ? {
+      title: name,
+      type: "product",
+      description: pick(description, lang),
+      image: new URL(shareImage.src, SITE_URL).href,
+      alt: name,
+    }
+  : undefined;
+---
+
+<BaseLayout title={name} description={pick(description, lang)} og={og}>
+  <Section width="content" class="py-10 lg:py-16">
+    <a
+      href={localizePath("/", lang)}
+      class="text-colorfor-text-secondary hover:text-colorfor-accent-primary mb-8 inline-block text-lg transition-colors"
+    >
+      ← {t("dolls.back")}
+    </a>
+
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+      <!-- Gallery -->
+      <div class="flex flex-col gap-4">
+        {
+          images.length === 0 && cover && (
+            <Picture
+              src={cover}
+              alt={name}
+              loading="eager"
+              class="w-full rounded-(--roundedness-card) object-cover"
+            />
+          )
+        }
+        {
+          images.map(({ src, alt }, i) => (
+            <Picture
+              src={src}
+              alt={alt || name}
+              loading={i === 0 ? "eager" : "lazy"}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              class="w-full rounded-(--roundedness-card) object-cover"
+            />
+          ))
+        }
+      </div>
+
+      <!-- Info -->
+      <div class="lg:sticky lg:top-10 lg:self-start">
+        <h1>{name}</h1>
+
+        <div class="mt-4 flex flex-wrap items-center gap-4">
+          {price && <span class="text-3xl">{price}</span>}
+          <span
+            class:list={[
+              "rounded-(--roundedness-default) px-3 py-1 text-lg",
+              available === false
+                ? "bg-colorfor-bg-card text-colorfor-text-body-inverse"
+                : "bg-colorfor-bg-button text-colorfor-text-heading",
+            ]}
+          >
+            {available === false ? t("dolls.sold") : t("dolls.available")}
+          </span>
+        </div>
+
+        {
+          text.length > 0 && (
+            <div class="mt-8 flex flex-col gap-4">
+              {text.map((p) => (
+                <p class="text-xl">{p}</p>
+              ))}
+            </div>
+          )
+        }
+
+        <div class="mt-10">
+          <Button href={localizePath("/contact", lang)} variant="dark">
+            {t("contact.cta")}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

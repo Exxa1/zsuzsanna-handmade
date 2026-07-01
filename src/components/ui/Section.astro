@@ -1,0 +1,28 @@
+---
+// Primitive layout section: the standard horizontal page padding + a centred
+// max-width. Replaces the ad-hoc DefaultPadding + max-w-* pattern.
+interface Props {
+	width?: "prose" | "content" | "full";
+	class?: string;
+}
+
+const { width = "content", class: className } = Astro.props;
+
+const maxW = {
+	prose: "max-w-prose",
+	content: "max-w-[1200px]",
+	full: "max-w-none",
+}[width];
+
+// A prose column is already narrow + centred, so it only needs a light mobile
+// gutter — the heavy page padding would squeeze the text into a thin strip.
+const padding = {
+	prose: "px-4 sm:px-6",
+	content: "px-4 sm:px-12 lg:px-24",
+	full: "px-4 sm:px-12 lg:px-24",
+}[width];
+---
+
+<section class:list={["mx-auto w-full", padding, maxW, className]}>
+	<slot />
+</section>

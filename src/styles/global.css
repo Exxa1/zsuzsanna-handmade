@@ -1,0 +1,82 @@
+@import "./tokens.css";
+@import "./fonts.css";
+@import "tailwindcss";
+@import "./prose.css";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+	p {
+		@apply text-lg;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: var(--heading-font-family);
+		letter-spacing: var(--heading-font-spacing);
+		color: var(--color-colorfor-text-heading);
+	}
+
+	h1 {
+		@apply text-4xl md:text-5xl lg:text-6xl;
+	}
+
+	h2 {
+		@apply text-3xl md:text-4xl lg:text-5xl;
+	}
+
+	h3 {
+		@apply text-2xl md:text-3xl lg:text-4xl;
+	}
+
+	h4 {
+		@apply text-xl md:text-2xl lg:text-3xl;
+	}
+}
+
+@layer components {
+	.button {
+		@apply mb-2 inline-block rounded-(--roundedness-button) px-7 py-3.5 font-[inherit] text-[length:inherit] font-medium transition-opacity duration-300 hover:opacity-80;
+	}
+
+	/* Secondary "See More" button — peach with black text. */
+	.defaultbutton {
+		@apply text-colorfor-text-heading bg-colorfor-bg-button;
+	}
+
+	/* Primary "Get Me" button — feldgrau with white text. */
+	.darkbutton {
+		@apply text-colorfor-text-button bg-colorfor-bg-button-dark;
+	}
+
+	.accentbutton {
+		@apply text-colorfor-accent-secondary bg-colorfor-bg-page border-colorfor-accent-secondary hover:border-colorfor-accent-secondary/50 border;
+	}
+
+	.card-box {
+		@apply mx-auto my-12 flex flex-col md:flex-row rounded-(--roundedness-card);
+	}
+
+	.card-box.outline {
+		@apply border-colorfor-stroke-card border-2;
+	}
+
+	.card-box.fill {
+		@apply bg-colorfor-bg-card text-colorfor-text-body-inverse;
+	}
+
+	.card-text {
+		@apply flex flex-col gap-12 px-8 py-6 md:basis-3/5 md:px-20 md:py-12 lg:gap-16;
+	}
+
+	.card-image-div {
+		@apply flex h-fit content-center justify-self-start px-6 py-4 md:basis-2/5;
+
+		img {
+			@apply object-contain;
+		}
+	}
+}

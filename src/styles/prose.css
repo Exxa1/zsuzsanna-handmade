@@ -1,0 +1,27 @@
+/* Markdown / long-form typography mapped to the brand tokens, so prose is
+   automatically on-brand. Applied via the `prose prose-website-colors` classes
+   (tokens are available globally — imported in global.css before this file). */
+
+@utility prose-website-colors {
+	--tw-prose-body: var(--color-colorfor-text-body);
+	--tw-prose-headings: var(--color-colorfor-text-heading);
+	--tw-prose-lead: var(--color-colorfor-text-secondary);
+	--tw-prose-links: var(--color-colorfor-text-link);
+	--tw-prose-bold: var(--color-colorfor-text-heading);
+	--tw-prose-counters: var(--color-colorfor-text-secondary);
+	--tw-prose-bullets: var(--color-colorfor-accent-primary);
+	--tw-prose-hr: var(--color-colorfor-border-subtle);
+	--tw-prose-quotes: var(--color-colorfor-text-heading);
+	--tw-prose-quote-borders: var(--color-colorfor-border-subtle);
+	--tw-prose-captions: var(--color-colorfor-text-secondary);
+	--tw-prose-code: var(--color-colorfor-text-heading);
+	--tw-prose-pre-code: var(--color-colorfor-text-body);
+	--tw-prose-pre-bg: var(--color-colorfor-bg-footer);
+	--tw-prose-th-borders: var(--color-colorfor-border-subtle);
+	--tw-prose-td-borders: var(--color-colorfor-border-subtle);
+}
+
+/* Long-form headings use the display font, like the rest of the site. */
+.prose :is(h1, h2, h3, h4) {
+	font-family: var(--heading-font-family);
+}

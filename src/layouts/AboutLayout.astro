@@ -1,0 +1,41 @@
+---
+// About page — a photo and some text. Self-contained; language from the URL.
+import { getEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import Section from "@/components/ui/Section.astro";
+import Picture from "@/components/ui/Picture.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { pick, paragraphs } from "@/utils/text";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const about = (await getEntry("pages", "about"))!.data;
+const heading = pick(about.heading, lang);
+const text = paragraphs(pick(about.text, lang));
+---
+
+<BaseLayout title={heading || t("nav.about")}>
+  <Section width="content" class="py-12 lg:py-20">
+    <div class="grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:gap-16">
+      {
+        about.photo && (
+          <Picture
+            src={about.photo}
+            alt={about.photoAlt ?? heading}
+            loading="eager"
+            sizes="(min-width: 768px) 50vw, 100vw"
+            class="aspect-[3/4] w-full rounded-(--roundedness-card) object-cover"
+          />
+        )
+      }
+
+      <div>
+        {heading && <h1 class="mb-6">{heading}</h1>}
+        <div class="flex flex-col gap-4">
+          {text.map((p) => <p class="text-xl">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
