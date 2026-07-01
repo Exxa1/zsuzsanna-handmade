@@ -146,7 +146,7 @@ collections:
     fields:
       - { name: title, label: "Title", widget: string }
       - { name: description, label: "Short summary", widget: text }
-      - { name: publishedAt, label: "Date", widget: date }
+      - { name: publishedAt, label: "Date", widget: datetime, type: date }
       - { name: cover, label: "Cover image", widget: image, required: false }
       - { name: tags, label: "Tags", widget: list, required: false }
       - { name: lang, label: "Language", widget: select, options: ["hu", "en"], default: "hu" }
