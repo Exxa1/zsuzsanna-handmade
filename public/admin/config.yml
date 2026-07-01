@@ -9,8 +9,6 @@
 # learn. `open_authoring` is intentionally NOT set (it's for anonymous
 # outside contributors submitting via forks, not a trusted collaborator).
 #
-# ⚠️ BEFORE GOING LIVE — set `site_url` to the real domain (or the Netlify
-# subdomain while you don't have one yet). See README "Going live / repoint".
 # ============================================================
 backend:
   name: github
@@ -24,7 +22,7 @@ local_backend: true
 publish_mode: simple
 media_folder: public/images
 public_folder: /images
-site_url: "https://mesehely.example/" # TODO(repoint): the Netlify subdomain or real domain
+site_url: "https://zsuzsannahandmade.netlify.app/"
 
 collections:
   # ---- Dolls -------------------------------------------------------------

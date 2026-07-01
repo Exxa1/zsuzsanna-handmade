@@ -7,8 +7,7 @@
 // public/admin/config.yml. See the "Going live / repoint" guide in README.md.
 // ============================================================
 
-// TODO(repoint): set this to the real domain (also update public/admin/config.yml → site_url).
-export const SITE_URL = "https://mesehely.example/";
+export const SITE_URL = "https://zsuzsannahandmade.netlify.app/";
 
 // Languages — Hungarian at the root ("/"), others prefixed ("/en/").
 export const DEFAULT_LOCALE = "hu";
