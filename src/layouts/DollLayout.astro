@@ -15,22 +15,19 @@ interface Props {
 }
 
 const { doll } = Astro.props;
-const { name, price, available, description, cover, images } = doll.data;
+const { name, price, available, description, images } = doll.data;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const text = paragraphs(pick(description, lang));
-const shareImage = cover ?? images[0]?.src;
-const og = shareImage
-  ? {
-      title: name,
-      type: "product",
-      description: pick(description, lang),
-      image: new URL(shareImage.src, SITE_URL).href,
-      alt: name,
-    }
-  : undefined;
+const og = {
+  title: name,
+  type: "product",
+  description: pick(description, lang),
+  image: new URL(images[0].src.src, SITE_URL).href,
+  alt: name,
+};
 ---
 
 <BaseLayout title={name} description={pick(description, lang)} og={og}>
@@ -45,16 +42,6 @@ const og = shareImage
     <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
       <!-- Gallery -->
       <div class="flex flex-col gap-4">
-        {
-          images.length === 0 && cover && (
-            <Picture
-              src={cover}
-              alt={name}
-              loading="eager"
-              class="w-full rounded-(--roundedness-card) object-cover"
-            />
-          )
-        }
         {
           images.map(({ src, alt }, i) => (
             <Picture

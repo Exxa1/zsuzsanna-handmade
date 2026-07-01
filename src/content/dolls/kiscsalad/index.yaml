@@ -1,12 +1,10 @@
 name: Family
-slug: kiscsalad
 order: 0
 available: false
 price: ''
 description:
   hu: ''
   en: ''
-cover: id008 (1).webp
 images:
   - src: id008 (1).webp
     alt: ''

@@ -1,14 +1,11 @@
 ---
 title: Hogyan készül egy baba
-slug: hogyan-keszul-egy-baba
 description: Bepillantás a műhelybe — onnan, ahol minden baba útja kezdődik.
 publishedAt: 2026-06-01
 cover: R3_06824.webp
 tags:
   - Műhely
 lang: hu
-isPublish: true
-isDraft: false
 ---
 
 Sokan kérdezitek, hogyan készül egy-egy baba. Most beengedlek a műhelybe.

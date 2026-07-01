@@ -34,6 +34,7 @@ collections:
     description: "Each doll shows on the home page and has its own page. Add one here to publish it."
     folder: src/content/dolls
     path: "{{slug}}/index"
+    identifier_field: name
     extension: yaml
     format: yaml
     media_folder: ""
@@ -41,7 +42,6 @@ collections:
     create: true
     fields:
       - { name: name, label: "Name", widget: string }
-      - { name: slug, label: "URL slug (lowercase, no spaces)", widget: string }
       - { name: order, label: "Order on the home page (lower = first)", widget: number, value_type: int, default: 0 }
       - { name: available, label: "Available (uncheck when sold)", widget: boolean, default: true, required: false }
       - { name: price, label: "Price (optional, e.g. 120€)", widget: string, required: false }
@@ -51,11 +51,11 @@ collections:
         fields:
           - { name: hu, label: "Magyar", widget: text, required: false }
           - { name: en, label: "English", widget: text, required: false }
-      - { name: cover, label: "Cover photo (optional — defaults to the first photo)", widget: image, required: false }
       - name: images
-        label: "Photos"
+        label: "Photos (the first one is the home page thumbnail)"
         label_singular: "Photo"
         widget: list
+        min: 1
         fields:
           - { name: src, label: "Photo", widget: image }
           - { name: alt, label: "Photo description (for accessibility)", widget: string, required: false }
@@ -138,20 +138,18 @@ collections:
     label_singular: "Blog post"
     folder: src/content/posts
     path: "{{slug}}/index"
+    identifier_field: title
     media_folder: ""
     public_folder: ""
     create: true
     format: frontmatter
     fields:
       - { name: title, label: "Title", widget: string }
-      - { name: slug, label: "URL slug (lowercase, no spaces)", widget: string }
       - { name: description, label: "Short summary", widget: text }
       - { name: publishedAt, label: "Date", widget: datetime }
       - { name: cover, label: "Cover image", widget: image, required: false }
       - { name: tags, label: "Tags", widget: list, required: false }
       - { name: lang, label: "Language", widget: select, options: ["hu", "en"], default: "hu" }
-      - { name: isPublish, label: "Publish", widget: boolean, default: true }
-      - { name: isDraft, label: "Draft", widget: boolean, default: false }
       - { name: body, label: "Body", widget: markdown }
 
 # Optimize images on upload (Sveltia CMS).

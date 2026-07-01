@@ -6,11 +6,11 @@ export async function getStaticPaths() {
 	// Hungarian posts render at /blog/<slug>; English posts at /en/blog/<slug>.
 	const posts = await getCollection(
 		"posts",
-		({ data }) => data.lang === "hu" && data.isPublish,
+		({ data }) => data.lang === "hu",
 	);
 
 	return posts.map((post) => ({
-		params: { slug: post.data.slug },
+		params: { slug: post.id },
 		props: { post },
 	}));
 }

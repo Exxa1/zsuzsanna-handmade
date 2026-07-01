@@ -1,5 +1,4 @@
 name: Lilla
-slug: lilla-baba
 order: 1
 available: false
 price: ''
@@ -12,7 +11,6 @@ description:
     Lilla is a classic Waldorf-style doll, made of pure wool and cotton. Her soft, huggable body and hand-embroidered face make her a companion for life.
 
     Her hair is hand-made and her clothes are removable. She is about 30 cm tall.
-cover: handmade_product-34.webp
 images:
   - src: handmade_product-32.webp
     alt: Lilla baba teljes alakban

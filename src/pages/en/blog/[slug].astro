@@ -7,11 +7,11 @@ export async function getStaticPaths() {
 	// are generated until a post is tagged `lang: en`.
 	const posts = await getCollection(
 		"posts",
-		({ data }) => data.lang === "en" && data.isPublish,
+		({ data }) => data.lang === "en",
 	);
 
 	return posts.map((post) => ({
-		params: { slug: post.data.slug },
+		params: { slug: post.id },
 		props: { post },
 	}));
 }

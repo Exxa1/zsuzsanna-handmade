@@ -5,7 +5,7 @@ import DollLayout from "@/layouts/DollLayout.astro";
 export async function getStaticPaths() {
 	const dolls = await getCollection("dolls");
 	return dolls.map((doll) => ({
-		params: { slug: doll.data.slug },
+		params: { slug: doll.id },
 		props: { doll },
 	}));
 }

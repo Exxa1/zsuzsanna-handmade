@@ -1,12 +1,10 @@
 name: EnZsu
-slug: enzsu
 order: 0
 available: false
 price: ''
 description:
   hu: ''
   en: ''
-cover: (Kör alakú matrica).png_áttetsző logós.webp
 images:
   - src: (Kör alakú matrica).png_áttetsző logós.webp
     alt: ''
