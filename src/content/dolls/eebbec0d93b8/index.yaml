@@ -1,0 +1,12 @@
+name: Teszt baba
+slug: babalaba
+order: 4
+available: true
+price: ''
+description:
+  hu: ''
+  en: ''
+cover: IMG01310.webp
+images:
+  - src: IMG01310.webp
+    alt: ''
